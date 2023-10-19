@@ -3,6 +3,7 @@ import { emailValidator } from "../utils/emailValidator.js";
 import { passwordValidator } from "../utils/passwordValidator.js";
 import bcrypt from "bcrypt";
 
+//* Middleware for register controller
 export const authRegister = async(req,res,next) => {
     try {
         const {username, email, password, confirmPassword, contact} = req.body;
@@ -27,6 +28,7 @@ export const authRegister = async(req,res,next) => {
     }
 }
 
+//* Middleware for login controller
 export const authLogin = async(req,res,next) => {
     try {
         const {field, password} = req.body;

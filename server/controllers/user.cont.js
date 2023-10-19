@@ -2,6 +2,7 @@ import User from "../models/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+//* Controller for registration
 export const register = async(req,res) => {
     try {
         const {username, email, password, contact} = req.body;
@@ -24,6 +25,7 @@ export const register = async(req,res) => {
     }
 }
 
+//* Controller for Login
 export const login = async(req,res) => {
     try {
         const {field} = req.body;
@@ -38,6 +40,7 @@ export const login = async(req,res) => {
     }
 }
 
+//* Controller for getCurrentUser (Context API)
 export const getCurrentUser = async(req,res) => {
     try {
         const {token} = req.body;
