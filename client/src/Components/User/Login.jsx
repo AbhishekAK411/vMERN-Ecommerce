@@ -2,12 +2,14 @@ import { Avatar, Button, Input} from "@material-tailwind/react";
 import registerPng from "../../Resources/Images/register.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { toast } from "react-hot-toast";
 import api from "../Helpers/apiConfig";
+import { authContext } from "../../Context/authContext";
 
 const Login = () => {
     const [userData, setUserData] = useState({field: "", password: ""});
+    const {state, login} = useContext(authContext);
     const router = useNavigate();
 
     const redirectToRegister = () => {
@@ -44,12 +46,14 @@ const Login = () => {
             const axiosResponse = response.data;
             if(axiosResponse?.success){
                 toast.success(axiosResponse?.message);
+                login({token: response?.data?.token, payload: response?.data?.user});
                 router("/");
             }
         } catch (error) {
             toast.error("An Error Occured. Try again later.");
         }
     }
+    console.log(state);
     return (
         <>
             <motion.section variants={loginVariants} initial="initial" animate="animate" transition={transition} className="w-full h-screen flex items-center justify-center">
