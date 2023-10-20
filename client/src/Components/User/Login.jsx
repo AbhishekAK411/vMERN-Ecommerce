@@ -2,8 +2,12 @@ import { Avatar, Button, Input} from "@material-tailwind/react";
 import registerPng from "../../Resources/Images/register.png";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import api from "../Helpers/apiConfig";
 
 const Login = () => {
+    const [userData, setUserData] = useState({field: "", password: ""});
     const router = useNavigate();
 
     const redirectToRegister = () => {
@@ -25,15 +29,36 @@ const Login = () => {
         stiffness: 260,
         damping: 20,
     }
+
+    const handleChange = (e) => {
+        setUserData({...userData, [e.target.name]: e.target.value})
+    }
+
+    const handleLoginClick = async() => {
+        try {
+            const response = await api.post("/login", {
+                field: userData.field,
+                password: userData.password
+            });
+
+            const axiosResponse = response.data;
+            if(axiosResponse?.success){
+                toast.success(axiosResponse?.message);
+                router("/");
+            }
+        } catch (error) {
+            toast.error("An Error Occured. Try again later.");
+        }
+    }
     return (
         <>
             <motion.section variants={loginVariants} initial="initial" animate="animate" transition={transition} className="w-full h-screen flex items-center justify-center">
                 <section className="shadow-shadow1 rounded w-[25%] h-[65%] border flex flex-col items-center justify-center">
                     <Avatar src={registerPng} withBorder={true} className="p-0.5 mb-10" alt="avatar" size="xl" />
                     <section className="w-[80%] h-[50%] flex flex-col items-center justify-center gap-y-5">
-                        <Input label="Username/Email" />
-                        <Input label="Password" />
-                        <Button className="rounded">Sign In</Button>
+                        <Input onChange={handleChange} name="field" label="Username/Email" />
+                        <Input onChange={handleChange} name="password" label="Password" />
+                        <Button className="rounded" onClick={handleLoginClick}>Sign In</Button>
                         <p>Don't have an account? <u className="cursor-pointer" onClick={redirectToRegister}>Sign Up</u></p>
                     </section>
                 </section>
