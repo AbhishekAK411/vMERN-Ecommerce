@@ -5,7 +5,7 @@ const Home = () => {
         <>
             <Navbar />
             <main className="w-full min-h-screen border-black border">
-
+                
             </main>
         </>
     )
