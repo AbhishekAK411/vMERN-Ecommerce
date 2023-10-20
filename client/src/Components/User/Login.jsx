@@ -9,10 +9,25 @@ const Login = () => {
     const redirectToRegister = () => {
         router("/register");
     }
-    
+
+    const loginVariants = {
+        initial: {
+            scale: 0
+        },
+        animate: {
+            scale: 1
+        }
+    }
+
+    const transition = {
+        type: "spring",
+        delay: 0.5,
+        stiffness: 260,
+        damping: 20,
+    }
     return (
         <>
-            <motion.section className="w-full h-screen border-black border flex items-center justify-center">
+            <motion.section variants={loginVariants} initial="initial" animate="animate" transition={transition} className="w-full h-screen flex items-center justify-center">
                 <section className="shadow-shadow1 rounded w-[25%] h-[65%] border flex flex-col items-center justify-center">
                     <Avatar src={registerPng} withBorder={true} className="p-0.5 mb-10" alt="avatar" size="xl" />
                     <section className="w-[80%] h-[50%] flex flex-col items-center justify-center gap-y-5">
