@@ -1,7 +1,17 @@
 import { Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
+import { authContext } from "../../Context/authContext";
+import { useContext } from "react";
+import {useNavigate} from "react-router-dom";
 
 const Navbar = () => {
+    const {state} = useContext(authContext);
+    const username = state?.user?.username;
+    const router = useNavigate();
+
+    const redirectToLogin = () => {
+        router("/login");
+    }
 
     const navVariants = {
         initial: {
@@ -26,7 +36,7 @@ const Navbar = () => {
                     <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Products</Button>
                     <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Explore</Button>
                     <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Features</Button>
-                    <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Sign In</Button>
+                    {username ? (<><Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">{username}</Button></>) : (<><Button onClick={redirectToLogin} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Sign In</Button></>)}
                 </section>
             </motion.nav>
         </>
