@@ -20,8 +20,16 @@ const userSchema = new Schema({
         required: true,
         unique: true
     },
+    role: {
+        type: String,
+        enum: ['User', 'Seller'],
+        default: 'User'
+    },
     cartProducts: {
         type: [String]
+    },
+    order: {
+        type: Array
     }
 });
 

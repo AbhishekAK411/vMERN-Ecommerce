@@ -9,7 +9,7 @@ import { authContext } from "../../Context/authContext";
 
 const Login = () => {
     const [userData, setUserData] = useState({field: "", password: ""});
-    const {state, login} = useContext(authContext);
+    const {login} = useContext(authContext);
     const router = useNavigate();
 
     const redirectToRegister = () => {
@@ -53,7 +53,6 @@ const Login = () => {
             toast.error("An Error Occured. Try again later.");
         }
     }
-    console.log(state);
     return (
         <>
             <motion.section variants={loginVariants} initial="initial" animate="animate" transition={transition} className="w-full h-screen flex items-center justify-center">
