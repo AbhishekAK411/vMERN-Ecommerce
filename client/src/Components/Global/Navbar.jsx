@@ -12,6 +12,12 @@ const Navbar = () => {
     const redirectToLogin = () => {
         router("/login");
     }
+    const redirectToHome = () => {
+        router("/");
+    }
+    const redirectToProducts = () => {
+        router("/products");
+    }
 
     const navVariants = {
         initial: {
@@ -30,10 +36,10 @@ const Navbar = () => {
     }
     return (
         <>
-            <motion.nav variants={navVariants} initial="initial" animate="animate" transition={transition} className="w-full h-[100px] flex items-center justify-center">
-                <section className="w-[40%] h-[60%] border rounded-full backdrop-blur-lg shadow-xl flex items-center justify-evenly">
-                    <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Home</Button>
-                    <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Products</Button>
+            <motion.nav variants={navVariants} initial="initial" animate="animate" transition={transition} className="fixed top-0 z-50 w-full h-[100px] flex items-center justify-center">
+                <section className="w-[40%] h-[60%] border rounded-full backdrop-blur-xl bg-white shadow-xl flex items-center justify-evenly">
+                    <Button onClick={redirectToHome} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Home</Button>
+                    <Button onClick={redirectToProducts} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Products</Button>
                     <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Explore</Button>
                     <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Features</Button>
                     {username ? (<><Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">{username}</Button></>) : (<><Button onClick={redirectToLogin} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Sign In</Button></>)}

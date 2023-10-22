@@ -23,7 +23,7 @@ const Multiple = () => {
     }, []);
     return (
         <>
-            <main className="w-full min-h-screen flex items-center justify-center">
+            <main className="w-full min-h-screen mt-20 flex items-center justify-center">
                 <section className="w-[95%] min-h-screen my-5 flex flex-wrap gap-x-5 gap-y-12">
                     {defaultProduct?.length ? (<>
                         {defaultProduct.map((product, i) => (

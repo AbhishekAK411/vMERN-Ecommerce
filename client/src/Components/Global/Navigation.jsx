@@ -4,12 +4,15 @@ import { useContext } from "react";
 import { authContext } from "../../Context/authContext";
 import {toast} from "react-hot-toast";
 import api from "../Helpers/apiConfig";
+import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
 
     const {state, logout} = useContext(authContext);
+    const router = useNavigate();
     const username = state?.user?.username;
     const role = state?.user?.role;
+
     const handleLogout = () => {
         logout();
         toast.success("Logged out successfully.");
@@ -28,6 +31,15 @@ const Navigation = () => {
         } catch (error) {
             toast.error(error.response.data.message);
         }
+    }
+    const redirectToSellerProducts = () => {
+        router("/sellerproducts");
+    }
+    const redirectToAddProduct = () => {
+        router("/addProducts");
+    }
+    const redirectToEditProducts = () => {
+        router("/editProducts");
     }
     const animate = {
         mount: {
@@ -67,7 +79,7 @@ const Navigation = () => {
                 {role === 'Seller' ? (<>
                     <motion.div variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
                         <Tooltip content="Add Products" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
-                            <IconButton className="rounded-full text-[#800000] text-base" variant="text">
+                            <IconButton onClick={redirectToAddProduct} className="rounded-full text-[#800000] text-base" variant="text">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M224,128a96,96,0,1,1-96-96A96,96,0,0,1,224,128Z" opacity="0.2"></path><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216Zm48-88a8,8,0,0,1-8,8H136v32a8,8,0,0,1-16,0V136H88a8,8,0,0,1,0-16h32V88a8,8,0,0,1,16,0v32h32A8,8,0,0,1,176,128Z"></path></svg>
                             </IconButton>
                         </Tooltip>
@@ -85,7 +97,7 @@ const Navigation = () => {
                     {role === 'Seller' ? (<>
                         <motion.div variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
                             <Tooltip content="Your Products" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
-                                <IconButton className="rounded-full text-[#800000] text-base" variant="text">
+                                <IconButton onClick={redirectToSellerProducts} className="rounded-full text-[#800000] text-base" variant="text">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M216,48V208a8,8,0,0,1-8,8H64L40,192V48a8,8,0,0,1,8-8H208A8,8,0,0,1,216,48Z" opacity="0.2"></path><path d="M224,48V208a16,16,0,0,1-16,16H136a8,8,0,0,1,0-16h72V48H48v96a8,8,0,0,1-16,0V48A16,16,0,0,1,48,32H208A16,16,0,0,1,224,48ZM125.66,154.34a8,8,0,0,0-11.32,0L64,204.69,45.66,186.34a8,8,0,0,0-11.32,11.32l24,24a8,8,0,0,0,11.32,0l56-56A8,8,0,0,0,125.66,154.34Z"></path></svg>
                                 </IconButton>
                             </Tooltip>
@@ -108,13 +120,23 @@ const Navigation = () => {
                         </Tooltip>
                     </motion.div>
                 </>)}
-                <motion.div variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
-                    <Tooltip content="Contact Us" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
-                        <IconButton className="rounded-full text-[#800000] text-base" variant="text">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M231.76,216.34a6,6,0,0,1-7.42,7.42l-29.87-8.53A72.05,72.05,0,0,1,92.06,175.89h0c1.3.07,2.61.11,3.93.11a72,72,0,0,0,67.93-95.88h0a72,72,0,0,1,59.29,106.36Z" opacity="0.2"></path><path d="M231.79,187.33A80,80,0,0,0,169.57,72.59,80,80,0,1,0,24.21,139.33l-7.66,26.82a14,14,0,0,0,17.3,17.3l26.82-7.66a80.15,80.15,0,0,0,25.75,7.63,80,80,0,0,0,108.91,40.37l26.82,7.66a14,14,0,0,0,17.3-17.3ZM61.53,159.23a8.22,8.22,0,0,0-2.2.3l-26.41,7.55,7.55-26.41a8,8,0,0,0-.68-6,63.95,63.95,0,1,1,25.57,25.57A7.94,7.94,0,0,0,61.53,159.23Zm154,29.44,7.55,26.41-26.41-7.55a8,8,0,0,0-6,.68,64.06,64.06,0,0,1-86.32-24.64A79.93,79.93,0,0,0,174.7,89.71a64,64,0,0,1,41.51,92.93A8,8,0,0,0,215.53,188.67Z"></path></svg>
-                        </IconButton>
-                    </Tooltip>
-                </motion.div>
+                {role === 'Seller' ? (<>
+                    <motion.div variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
+                        <Tooltip  content="Edit Products" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
+                            <IconButton onClick={redirectToEditProducts} className="rounded-full text-[#800000] text-base" variant="text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M120,56,60.32,78.38a8,8,0,0,0-5.08,6.17L32,224l139.45-23.24a8,8,0,0,0,6.17-5.08L200,136Zm-4,104a20,20,0,1,1,20-20A20,20,0,0,1,116,160Z" opacity="0.2"></path><path d="M240,100.68a15.86,15.86,0,0,0-4.69-11.31L166.63,20.68a16,16,0,0,0-22.63,0L115.57,49.11l-58,21.77A16.06,16.06,0,0,0,47.35,83.23L24.11,222.68A8,8,0,0,0,32,232a8.4,8.4,0,0,0,1.32-.11l139.44-23.24a16,16,0,0,0,12.35-10.17l21.77-58L235.31,112A15.87,15.87,0,0,0,240,100.68Zm-69.87,92.19L55.32,212l47.37-47.37a28,28,0,1,0-11.32-11.32L44,200.7,63.13,85.86,118,65.29,190.7,138ZM104,140a12,12,0,1,1,12,12A12,12,0,0,1,104,140Zm96-15.32L131.31,56l24-24L224,100.68Z"></path></svg>
+                            </IconButton>
+                        </Tooltip>
+                    </motion.div>
+                </>) : (<>
+                    <motion.div variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
+                        <Tooltip content="Contact Us" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
+                            <IconButton className="rounded-full text-[#800000] text-base" variant="text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M231.76,216.34a6,6,0,0,1-7.42,7.42l-29.87-8.53A72.05,72.05,0,0,1,92.06,175.89h0c1.3.07,2.61.11,3.93.11a72,72,0,0,0,67.93-95.88h0a72,72,0,0,1,59.29,106.36Z" opacity="0.2"></path><path d="M231.79,187.33A80,80,0,0,0,169.57,72.59,80,80,0,1,0,24.21,139.33l-7.66,26.82a14,14,0,0,0,17.3,17.3l26.82-7.66a80.15,80.15,0,0,0,25.75,7.63,80,80,0,0,0,108.91,40.37l26.82,7.66a14,14,0,0,0,17.3-17.3ZM61.53,159.23a8.22,8.22,0,0,0-2.2.3l-26.41,7.55,7.55-26.41a8,8,0,0,0-.68-6,63.95,63.95,0,1,1,25.57,25.57A7.94,7.94,0,0,0,61.53,159.23Zm154,29.44,7.55,26.41-26.41-7.55a8,8,0,0,0-6,.68,64.06,64.06,0,0,1-86.32-24.64A79.93,79.93,0,0,0,174.7,89.71a64,64,0,0,1,41.51,92.93A8,8,0,0,0,215.53,188.67Z"></path></svg>
+                            </IconButton>
+                        </Tooltip>
+                    </motion.div>
+                </>)}
                 {username ? (<><motion.div onClick={handleLogout} variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
                     <Tooltip content="Logout" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
                         <IconButton className="rounded-full text-[#800000] text-base" variant="text">
