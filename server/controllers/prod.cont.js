@@ -46,6 +46,15 @@ export const editProduct = async(req,res) => {
     try {
         const {userId, productId, products_category, products_name, products_description, products_price, products_brand, products_image, products_size, products_color} = req.body;
 
+        const findUser = await User.findById(userId).exec();
+        if(findUser.role === 'Seller'){
+            const updateProduct = defProduct.findByIdAndUpdate(productId, {products_name, products_category, products_description, products_price, products_brand, products_image, products_size, products_color}).exec();
+            if(updateProduct){
+                return res.status(200).json({status: 200, success: true, message: "Product updated successfully."});
+            }else{
+                return res.status(200).json({status: 200, success: false, message: "Error while updating product."});
+            }
+        }
     } catch (error) {
         return res.status(500).json({status: 500, success: false, message: "Internal server error."});
     }

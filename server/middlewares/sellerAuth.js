@@ -1,4 +1,5 @@
 import User from "../models/users.js";
+import defProduct from "../models/defproduct.js";
 
 export const checkChangeRole = async(req, res, next) => {
     try {
@@ -56,7 +57,9 @@ export const checkEditProduct = async(req,res,next) => {
 
         const findUser = await User.findById(userId).exec();
         if(findUser.role === 'Seller'){
-            
+            const findProduct = await defProduct.findById(productId).exec();
+            if(!findProduct) return res.status(400).json({status: 400, success: false, message: "Product not found."});
+            next();
         }else{
             return res.status(200).json({status: 200, success: false, message: "Please become a seller"});
         }

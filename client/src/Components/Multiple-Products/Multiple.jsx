@@ -23,11 +23,11 @@ const Multiple = () => {
     }, []);
     return (
         <>
-            <main className="w-full min-h-screen mt-20 flex items-center justify-center">
-                <section className="w-[95%] min-h-screen my-5 flex flex-wrap gap-x-5 gap-y-12">
+            <main className="w-full min-h-screen mt-24 flex items-center justify-center">
+                <section className="w-[95%] min-h-screen my-5 flex flex-wrap gap-x-10 gap-y-12">
                     {defaultProduct?.length ? (<>
                         {defaultProduct.map((product, i) => (
-                            <section key={i} className="w-[250px] h-[350px] border rounded-md">
+                            <section key={i} className="w-[300px] h-[400px] border rounded-md">
                                 <Card className="h-full">
                                     <CardHeader color="blue-gray" className="h-56">
                                         <img className="w-full h-full object-cover" src={product.products_image} alt="" />
