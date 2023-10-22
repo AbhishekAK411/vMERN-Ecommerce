@@ -1,6 +1,3 @@
-import Navbar from "../Global/Navbar";
-import Navigation from "../Global/Navigation";
-
 const Home = () => {
     return (
         <>
