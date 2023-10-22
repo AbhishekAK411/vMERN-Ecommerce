@@ -5,6 +5,7 @@ import Login from "./Components/User/Login";
 import Multiple from "./Components/Multiple-Products/Multiple";
 import Navbar from "./Components/Global/Navbar";
 import Navigation from "./Components/Global/Navigation";
+import Add from "./Components/Product/Add";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/products" element={<Multiple />} />
+        <Route exact path="/addProducts" element={<Add />} />
       </Routes>
     </>
   );

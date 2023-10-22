@@ -56,7 +56,7 @@ const Register = () => {
     return (
         <>
             <motion.section variants={registerVariants} initial="initial" animate="animate" transition={transition} className="w-full h-screen flex items-center justify-center">
-                <section className="shadow-shadow1 rounded w-[25%] h-[65%] border flex flex-col items-center justify-center">
+                <section className="shadow-shadow1 rounded w-[25%] h-[85%] border flex flex-col items-center justify-center">
                     <Avatar src={registerPng} withBorder={true} className="p-0.5 mb-10" alt="avatar" size="xl" />
                     <section className="w-[80%] h-[70%] flex flex-col gap-y-5">
                         <Input onChange={handleChange} name="username" label="Username" />
