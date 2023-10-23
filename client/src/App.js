@@ -8,6 +8,7 @@ import Navigation from "./Components/Global/Navigation";
 import Add from "./Components/Product/Add";
 import Edit from "./Components/Product/Edit";
 import Get from "./Components/Product/Get";
+import Single from "./Components/Single/Single";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route exact path="/addProducts" element={<Add />} />
         <Route exact path="/editProducts" element={<Edit />} />
         <Route exact path="/sellerProducts" element={<Get />} />
+        <Route exact path="/single/:id" element={<Single />} />
       </Routes>
     </>
   );

@@ -1,11 +1,12 @@
 import {Card, CardHeader, CardBody, CardFooter, Button, Typography} from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import api from "../Helpers/apiConfig";
+import {useNavigate} from "react-router-dom";
 
 const Multiple = () => {
 
     const [defaultProduct, setDefaultProduct] = useState([]);
-
+    const router = useNavigate();
     useEffect(() => {
         const getDefaultProducts = async() => {
             try {
@@ -21,6 +22,10 @@ const Multiple = () => {
         }
         getDefaultProducts();
     }, []);
+
+    const redirectToSingle = (id) => {
+        router(`/single/${id}`);
+    }
     return (
         <>
             <main className="w-full min-h-screen mt-24 flex items-center justify-center">
@@ -37,7 +42,7 @@ const Multiple = () => {
                                         <Typography variant="paragraph"> ₹ {product.products_price}</Typography>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button>Learn More</Button>
+                                        <Button onClick={() =>redirectToSingle(product._id)}>Learn More</Button>
                                     </CardFooter>
                                 </Card>
                             </section>

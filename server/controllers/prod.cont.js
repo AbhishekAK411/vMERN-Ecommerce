@@ -70,6 +70,22 @@ export const getProduct = async(req,res) => {
     }
 }
 
+export const getSingleProduct = async(req,res) => {
+    try {
+        const {productId} = req.body;
+        if(!productId) return res.status(404).json({status: 404, success: false, message: "Product not found."});
+
+        const findSingleProduct = await defProduct.findOne({_id: productId}).exec();
+
+        if(findSingleProduct){
+            return res.status(200).json({status: 200, success: true, singleProduct: findSingleProduct});
+        }
+        
+    } catch (error) {
+        return res.status(500).json({status: 500, success: false, message: "Internal server error."});
+    }
+}
+
 export const deleteProduct = async(req,res) => {
     try {
         const {productId} = req.body;
