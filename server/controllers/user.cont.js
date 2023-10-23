@@ -71,7 +71,6 @@ export const addToCart = async (req, res) => {
             );
 
             if (productIndex !== -1) {
-                console.log(productIndex);
                 findUser.cartProducts[productIndex].qty += 1;
             } else {
                 findUser.cartProducts.push({
@@ -101,6 +100,22 @@ export const addToCart = async (req, res) => {
 export const getCartProduct = async(req,res) => {
     try {
         const {userId} = req.body;
+
+        const findUser = await User.findById(userId).exec();
+        let array1 = [];
+        if(findUser.cartProducts.length > 0){
+            for(let i=0;i<findUser.cartProducts.length;i++){
+                let productDetails = await defProduct.find({products_id: findUser.cartProducts[i].product}).exec();
+                array1.push({
+                    product: productDetails,
+                    qty: findUser.cartProducts[i].qty
+                });
+            }
+
+            return res.status(200).json({status: 200, success: true, array1});
+        }else{
+            return res.status(200).json({status: 200, success: true, message: "Your cart is empty."});
+        }
     } catch (error) {
         return res.status(500).json({status: 500, success: false, message: "Internal server error."});
     }

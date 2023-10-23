@@ -68,7 +68,20 @@ export const checkAddToCart = async(req,res,next) => {
 
 export const checkGetCartProduct = async(req,res,next) => {
     try {
-        
+        const {userId} = req.body;
+        if(!userId) return res.status(404).json({status: 404, success: false, message: "You are not logged in."});
+
+        const findUser = await User.findById(userId).exec();
+        if(!findUser) return res.status(400).json({status: 400, success: false, message: "User not found."});
+
+        if(findUser.role === 'Seller'){
+            return res.status(400).json({status: 400, success: false, message: "Contact an administrator."});
+        }
+        if(findUser.cartProducts.length > 0){
+            next();
+        }else{
+            return res.status(200).json({status: 200, success: true, message: "Your cart is empty."});
+        }
     } catch (error) {
         return res.status(500).json({status: 500, success: false, message: "Internal server error."});
     }
