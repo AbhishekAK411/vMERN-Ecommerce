@@ -1,13 +1,16 @@
 import { useParams } from "react-router-dom";
-import {Button} from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import {Button, Chip} from "@material-tailwind/react";
+import { useContext, useEffect, useState } from "react";
 import api from "../Helpers/apiConfig";
 import {toast} from "react-hot-toast";
+import { authContext } from "../../Context/authContext";
 
 const Single = () => {
 
     const [singleProduct, setSingleProduct] = useState();
+    const {state} = useContext(authContext);
     const {id} = useParams();
+
     useEffect(() => {
         if(id){
             const getSingleProduct = async() => {
@@ -27,7 +30,24 @@ const Single = () => {
         }
     }, [id]);
 
-    console.log(singleProduct);
+    const addToCart = async(id) => {
+        try {
+            const response = await api.post("/addCart", {
+                userId: state?.user?._id,
+                productId: id
+            });
+            const axiosResponse = response?.data;
+            if(axiosResponse?.success){
+                toast.success(axiosResponse?.message);
+                console.log(axiosResponse);
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message);
+        }
+    }
+
+    const sizeArray = singleProduct?.products_size;
+    const colorArray = singleProduct?.products_color;
     return (
         <>
             <main className="w-full min-h-screen mt-28 flex items-center justify-center">
@@ -58,9 +78,13 @@ const Single = () => {
                         <p className="font-light pt-10 text-base">{singleProduct?.products_description}</p>
                         <p className="font-light pt-5 text-base">{singleProduct?.products_category}</p>
                         <p className="font-light pt-5 text-base">{singleProduct?.products_brand}</p>
-                        <p className="font-light pt-5 text-base">{singleProduct?.products_size}</p>
-                        <p className="font-light pt-5 text-base">{singleProduct?.products_color}</p>
-                        <Button className="w-[300px] mt-20">Add To Cart</Button>
+                        <p className="font-light pt-5 text-base flex">{sizeArray?.length && sizeArray?.map((size, i) => (
+                            <Chip className="w-[50px] mr-2" value={size} key={i} />
+                        ))}</p>
+                        <p className="font-light pt-5 text-base flex">{colorArray?.length && colorArray?.map((color,i) => (
+                            <Chip className="w-[155px] bg-deep-purple-500 mr-2" key={i} value={color} />
+                        ))}</p>
+                        <Button onClick={() => addToCart(singleProduct?._id)} className="w-[300px] mt-20">Add To Cart</Button>
                     </section>
                 </section>
             </main>

@@ -25,9 +25,12 @@ const userSchema = new Schema({
         enum: ['User', 'Seller'],
         default: 'User'
     },
-    cartProducts: {
-        type: [String]
-    },
+    cartProducts: [
+        {
+            product: Number,
+            qty: Number
+        }
+    ],
     order: {
         type: Array
     }

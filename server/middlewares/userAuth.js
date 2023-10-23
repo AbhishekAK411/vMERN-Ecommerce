@@ -49,3 +49,27 @@ export const authLogin = async(req,res,next) => {
         return res.status(500).json({status: 500, success: false, message: 'Internal server error.'});
     }
 }
+
+export const checkAddToCart = async(req,res,next) => {
+    try {
+        const {productId, userId} = req.body;
+        if(!productId) return res.status(404).json({status: 404, success: false, message: "Product not found."});
+        if(!userId) return res.status(404).json({status: 404, success: false, message: "You are not logged in."});
+
+        const findUser = await User.findById(userId).exec();
+        if(findUser.role  === 'Seller'){
+            return res.status(400).json({status: 400, success: false, message: "Error while adding to cart, contact administrator."});
+        }
+        next();
+    } catch (error) {
+        return res.status(500).json({status: 500, success: false, message: "Internal server error."});
+    }
+}
+
+export const checkGetCartProduct = async(req,res,next) => {
+    try {
+        
+    } catch (error) {
+        return res.status(500).json({status: 500, success: false, message: "Internal server error."});
+    }
+}

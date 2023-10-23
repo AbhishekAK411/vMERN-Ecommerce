@@ -1,6 +1,7 @@
 import User from "../models/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import defProduct from "../models/defproduct.js";
 
 //* Controller for registration
 export const register = async(req,res) => {
@@ -56,3 +57,52 @@ export const getCurrentUser = async(req,res) => {
         return res.status(500).json({status: 500, success: false, message: "Internal server error."});
     }
 }
+
+export const addToCart = async (req, res) => {
+    try {
+        const { userId, productId } = req.body;
+
+        const findUser = await User.findById(userId).exec();
+        const findSingleProduct = await defProduct.findById(productId).exec();
+
+        if (findUser.role === "User") {
+            const productIndex = findUser.cartProducts.findIndex(
+                (cartProduct) => cartProduct.product === findSingleProduct.products_id
+            );
+
+            if (productIndex !== -1) {
+                console.log(productIndex);
+                findUser.cartProducts[productIndex].qty += 1;
+            } else {
+                findUser.cartProducts.push({
+                    product: findSingleProduct.products_id,
+                    qty: 1,
+                });
+            }
+
+            await findUser.save();
+
+            return res.status(200).json({
+                status: 200,
+                success: true,
+                message: productIndex !== -1 ? "Product added again." : "Product added to the cart successfully.",
+                quantity: findUser.cartProducts[productIndex]?.qty || 1,
+            });
+        }
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            success: false,
+            message: "Internal server error.",
+        });
+    }
+}
+
+export const getCartProduct = async(req,res) => {
+    try {
+        const {userId} = req.body;
+    } catch (error) {
+        return res.status(500).json({status: 500, success: false, message: "Internal server error."});
+    }
+}
+
