@@ -13,6 +13,7 @@ import Cart from "./Components/Cart/Cart";
 import Mens from "./Components/Category/Mens";
 import Womens from "./Components/Category/Womens";
 import Electronics from "./Components/Category/Electronics";
+import Newest from "./Components/Newest/Newest";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route exact path="/mens" element={<Mens />} />
         <Route exact path="/womens" element={<Womens />} />
         <Route exact path="/electronics" element={<Electronics />} />
+        <Route exact path="/newest" element={<Newest />} />
       </Routes>
     </>
   );

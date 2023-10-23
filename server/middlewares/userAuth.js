@@ -36,7 +36,7 @@ export const authLogin = async(req,res,next) => {
         if(!password) return res.status(404).json({status: 404, success: false, message: "Password is required."});
 
         const existingUser = await User.findOne({$or: [{username: field}, {email: field}]}).exec();
-        if(!existingUser) return res.status(200).json({status: 200, success: false, message: "User not found."});
+        if(!existingUser) return res.status(400).json({status: 400, success: false, message: "User not found."});
 
         const bool = await bcrypt.compare(password, existingUser.password);
         if(bool){

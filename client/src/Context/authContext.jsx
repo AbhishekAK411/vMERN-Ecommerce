@@ -3,7 +3,7 @@ import api from "../Components/Helpers/apiConfig";
 
 export const authContext = createContext();
 
-const initialState = {user: null};
+const initialState = {user: null, searchData: ""};
 
 const reducer = (state,action) => {
     switch(action.type){
@@ -11,6 +11,8 @@ const reducer = (state,action) => {
             return {...state, user: action.payload};
         case "logout":
             return {...state, user: null};
+        case "setSearchData":
+            return {...state, searchData: action.payload}
         default:
             return state;
     }
@@ -34,6 +36,13 @@ const HandleAuthContext = ({ children }) => {
         dispatch({
             type: "logout"
         });
+    }
+
+    const setSearchData = (usertext) => {
+        dispatch({
+            type: "setSearchData",
+            payload: usertext,
+          });
     }
 
     useEffect(() => {
@@ -80,7 +89,7 @@ const HandleAuthContext = ({ children }) => {
     }, []);
 
     return (
-        <authContext.Provider value={{state, login, logout}}>
+        <authContext.Provider value={{state, login, logout, setSearchData}}>
             {children}
         </authContext.Provider>
     )

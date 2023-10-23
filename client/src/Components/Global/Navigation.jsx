@@ -1,6 +1,6 @@
-import { IconButton, Tooltip } from "@material-tailwind/react";
+import { IconButton, Tooltip, Badge } from "@material-tailwind/react";
 import { motion } from "framer-motion";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { authContext } from "../../Context/authContext";
 import {toast} from "react-hot-toast";
 import api from "../Helpers/apiConfig";
@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 
 const Navigation = () => {
 
-    const {state, logout} = useContext(authContext);
+    const {state, logout, setSearchData} = useContext(authContext);
+    const [search, setSearch] = useState(false);
+    
     const router = useNavigate();
     const username = state?.user?.username;
     const role = state?.user?.role;
@@ -16,6 +18,7 @@ const Navigation = () => {
     const handleLogout = () => {
         logout();
         toast.success("Logged out successfully.");
+        router("/");
     }
     const becomeASellerFunction = async() => {
         try {
@@ -44,6 +47,15 @@ const Navigation = () => {
     const redirectToCart = () => {
         router("/cart");
     }
+    const searchState = () => {
+        setSearch((prev) => !(prev));
+    }
+    const handleChange = (e) => {
+        setSearchData(e.target.value);
+    }
+    const redirectToNewest = () => {
+        router("/newest");
+    }
     const animate = {
         mount: {
             scale: 1,
@@ -71,10 +83,11 @@ const Navigation = () => {
     };
     return (
         <>
+            {search && <section className="w-[200px] h-[50px] absolute right-40 top-5 z-50 flex items-center justify-center"><input onChange={handleChange} className="border rounded p-5 h-[40px]" type="text" placeholder="search" /></section>}
             <motion.section initial={{x: 180}} animate={{x: 0}} transition={{delay: 1}} className="select-none w-[4%] h-[350px] border fixed right-5 top-52 backdrop-blur-md z-50 rounded-full shadow-2xl flex flex-col items-center justify-evenly">
                 <motion.div variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
                     <Tooltip content="Search" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
-                        <IconButton className="rounded-full text-[#800000] text-base" variant="text">
+                        <IconButton onClick={searchState} className="rounded-full text-[#800000] text-base" variant="text">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M192,112a80,80,0,1,1-80-80A80,80,0,0,1,192,112Z" opacity="0.2"></path><path d="M229.66,218.34,179.6,168.28a88.21,88.21,0,1,0-11.32,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z"></path></svg>
                         </IconButton>
                     </Tooltip>
@@ -133,9 +146,9 @@ const Navigation = () => {
                     </motion.div>
                 </>) : (<>
                     <motion.div variants={buttonVariants} initial="initial" animate="animate" transition={transition}>
-                        <Tooltip content="Contact Us" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
-                            <IconButton className="rounded-full text-[#800000] text-base" variant="text">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M231.76,216.34a6,6,0,0,1-7.42,7.42l-29.87-8.53A72.05,72.05,0,0,1,92.06,175.89h0c1.3.07,2.61.11,3.93.11a72,72,0,0,0,67.93-95.88h0a72,72,0,0,1,59.29,106.36Z" opacity="0.2"></path><path d="M231.79,187.33A80,80,0,0,0,169.57,72.59,80,80,0,1,0,24.21,139.33l-7.66,26.82a14,14,0,0,0,17.3,17.3l26.82-7.66a80.15,80.15,0,0,0,25.75,7.63,80,80,0,0,0,108.91,40.37l26.82,7.66a14,14,0,0,0,17.3-17.3ZM61.53,159.23a8.22,8.22,0,0,0-2.2.3l-26.41,7.55,7.55-26.41a8,8,0,0,0-.68-6,63.95,63.95,0,1,1,25.57,25.57A7.94,7.94,0,0,0,61.53,159.23Zm154,29.44,7.55,26.41-26.41-7.55a8,8,0,0,0-6,.68,64.06,64.06,0,0,1-86.32-24.64A79.93,79.93,0,0,0,174.7,89.71a64,64,0,0,1,41.51,92.93A8,8,0,0,0,215.53,188.67Z"></path></svg>
+                        <Tooltip content="Newest" className="bg-gray-900 rounded-full text-white ml-[-10px]" placement="left" animate={animate}>
+                            <IconButton onClick={redirectToNewest} className="rounded-full text-[#800000] text-base" variant="text">
+                                <Badge className="text-[0.50rem] w-[0.125rem] h-[0.125rem] flex items-center justify-center" content="new"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#ad1f1f" viewBox="0 0 256 256"><path d="M184.13,147.7a8.08,8.08,0,0,0-2.54,7.89l13.52,58.54a8,8,0,0,1-11.89,8.69l-51.1-31a7.93,7.93,0,0,0-8.24,0l-51.1,31a8,8,0,0,1-11.89-8.69l13.52-58.54a8.08,8.08,0,0,0-2.54-7.89L26.76,108.35A8,8,0,0,1,31.3,94.28l59.46-5.14a8,8,0,0,0,6.67-4.88L120.66,28.9a8,8,0,0,1,14.68,0l23.23,55.36a8,8,0,0,0,6.67,4.88l59.46,5.14a8,8,0,0,1,4.54,14.07Z" opacity="0.2"></path><path d="M239.2,97.29a16,16,0,0,0-13.81-11L166,81.17,142.72,25.81h0a15.95,15.95,0,0,0-29.44,0L90.07,81.17,30.61,86.32a16,16,0,0,0-9.11,28.06L66.61,153.8,53.09,212.34a16,16,0,0,0,23.84,17.34l51-31,51.11,31a16,16,0,0,0,23.84-17.34l-13.51-58.6,45.1-39.36A16,16,0,0,0,239.2,97.29Zm-15.22,5-45.1,39.36a16,16,0,0,0-5.08,15.71L187.35,216v0l-51.07-31a15.9,15.9,0,0,0-16.54,0l-51,31h0L82.2,157.4a16,16,0,0,0-5.08-15.71L32,102.35a.37.37,0,0,1,0-.09l59.44-5.14a16,16,0,0,0,13.35-9.75L128,32.08l23.2,55.29a16,16,0,0,0,13.35,9.75L224,102.26S224,102.32,224,102.33Z"></path></svg></Badge>
                             </IconButton>
                         </Tooltip>
                     </motion.div>

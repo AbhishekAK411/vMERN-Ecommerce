@@ -79,7 +79,7 @@ const Cart = () => {
                                             <p className="font-bold text-2xl">{e.product[0].products_name}</p>
                                             <p className="font-semibold text-xl mt-10">₹ {e.product[0].products_price}/-</p>
                                             <p className="font-semibold text-xl">{e.product[0].products_category}</p>
-                                            <Button className="mt-12">Remove</Button>
+                                            <Button className="mt-3">Remove</Button>
                                         </section>
                                         <section className="w-[15%] h-full flex items-center justify-between">
                                             <IconButton className="rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#f0f0f0" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128Z"></path></svg></IconButton>
@@ -96,7 +96,7 @@ const Cart = () => {
                             <u><p className="text-2xl">Cart</p></u>
                             <section className="w-[90%] mt-10 flex justify-between">
                                 <p>Total Products</p>
-                                <p>{quantity}</p>
+                                <p>{quantity}<span className="text-white">--</span></p>
                             </section>
                             <section className="w-[90%] flex justify-between">
                                 <p>Product Cost</p>

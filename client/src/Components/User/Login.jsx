@@ -50,7 +50,7 @@ const Login = () => {
                 router("/");
             }
         } catch (error) {
-            toast.error("An Error Occured. Try again later.");
+            toast.error(error?.response?.data?.message);
         }
     }
     return (

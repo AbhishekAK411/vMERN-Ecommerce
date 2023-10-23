@@ -1,10 +1,10 @@
-import {Card, CardHeader, CardBody, CardFooter, Button, Typography} from "@material-tailwind/react";
+import {Card, CardHeader, CardBody, CardFooter, Button, Typography, Badge} from "@material-tailwind/react";
 import { useContext, useEffect, useState } from "react";
 import api from "../Helpers/apiConfig";
 import {useNavigate} from "react-router-dom";
 import { authContext } from "../../Context/authContext";
 
-const Multiple = () => {
+const Newest = () => {
 
     const [defaultProduct, setDefaultProduct] = useState([]);
     const [filteredProduct, setFilteredProduct] = useState([]);
@@ -40,14 +40,13 @@ const Multiple = () => {
     const redirectToSingle = (id) => {
         router(`/single/${id}`);
     }
-    
 
     return (
         <>
             <main className="w-full min-h-screen mt-24 flex items-center justify-center">
                 <section className="w-[95%] min-h-screen my-5 flex flex-wrap gap-x-10 gap-y-12">
                     {filteredProduct?.length ? (<>
-                        {filteredProduct.map((product, i) => (
+                        {filteredProduct?.slice().reverse().map((product, i) => (
                             <section key={i} className="w-[300px] h-[400px] border rounded-md">
                                 <Card className="h-full">
                                     <CardHeader color="blue-gray" className="h-56">
@@ -58,7 +57,11 @@ const Multiple = () => {
                                         <Typography variant="paragraph"> ₹ {product.products_price}</Typography>
                                     </CardBody>
                                     <CardFooter>
-                                        <Button onClick={() =>redirectToSingle(product._id)}>Learn More</Button>
+                                        {i < 20 ? (<>
+                                            <Badge content="newest"><Button onClick={() =>redirectToSingle(product._id)}>Learn More</Button></Badge>
+                                        </>) : (<>
+                                            <Button onClick={() =>redirectToSingle(product._id)}>Learn More</Button>
+                                        </>)}
                                     </CardFooter>
                                 </Card>
                             </section>
@@ -70,4 +73,4 @@ const Multiple = () => {
     )
 }
 
-export default Multiple;
+export default Newest;

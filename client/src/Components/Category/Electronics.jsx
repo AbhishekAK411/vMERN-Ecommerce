@@ -1,11 +1,14 @@
 import {Card, CardHeader, CardBody, CardFooter, Button, Typography} from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import api from "../Helpers/apiConfig";
 import {useNavigate} from "react-router-dom";
+import { authContext } from "../../Context/authContext";
 
 const Electronics = () => {
 
     const [defaultProduct, setDefaultProduct] = useState([]);
+    const [filteredProduct, setFilteredProduct] = useState([]);
+    const {state} = useContext(authContext);
     const router = useNavigate();
     useEffect(() => {
         const getDefaultProducts = async() => {
@@ -23,6 +26,16 @@ const Electronics = () => {
         getDefaultProducts();
     }, []);
 
+    useEffect(() => {
+        if(state?.searchData === ''){
+            setFilteredProduct(defaultProduct);
+        }else{
+            let lowercasesearch = state?.searchData.toLowerCase();
+            const filter = defaultProduct.filter((product) => product.products_name.toLowerCase().includes(lowercasesearch));
+            setFilteredProduct(filter);
+        }
+    }, [state?.searchData, defaultProduct]);
+
     const redirectToSingle = (id) => {
         router(`/single/${id}`);
     }
@@ -30,8 +43,8 @@ const Electronics = () => {
         <>
             <main className="w-full min-h-screen mt-24 flex items-center justify-center">
                 <section className="w-[95%] min-h-screen my-5 flex flex-wrap gap-x-10 gap-y-12">
-                    {defaultProduct?.length ? (<>
-                        {defaultProduct.filter(product => product.products_category === 'electronics').map((product, i) => (
+                    {filteredProduct?.length ? (<>
+                        {filteredProduct.filter(product => product.products_category === 'electronics').map((product, i) => (
                             <section key={i} className="w-[300px] h-[400px] border rounded-md">
                                 <Card className="h-full">
                                     <CardHeader color="blue-gray" className="h-56">
