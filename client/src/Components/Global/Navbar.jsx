@@ -12,11 +12,20 @@ const Navbar = () => {
     const redirectToLogin = () => {
         router("/login");
     }
-    const redirectToHome = () => {
+    // const redirectToHome = () => {
+    //     router("/");
+    // }
+    const redirectToProducts = () => {
         router("/");
     }
-    const redirectToProducts = () => {
-        router("/products");
+    const redirectToMens = () => {
+        router("/mens");
+    }
+    const redirectToWomens = () => {
+        router("/womens");
+    }
+    const redirectToElectronics = () => {
+        router("/electronics");
     }
 
     const navVariants = {
@@ -38,10 +47,10 @@ const Navbar = () => {
         <>
             <motion.nav variants={navVariants} initial="initial" animate="animate" transition={transition} className="fixed top-0 z-50 w-full h-[100px] flex items-center justify-center">
                 <section className="w-[40%] h-[60%] border rounded-full backdrop-blur-xl bg-white shadow-xl flex items-center justify-evenly">
-                    <Button onClick={redirectToHome} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Home</Button>
-                    <Button onClick={redirectToProducts} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Products</Button>
-                    <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Explore</Button>
-                    <Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Features</Button>
+                    <Button onClick={redirectToProducts} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Home</Button>
+                    <Button onClick={redirectToMens} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Mens</Button>
+                    <Button onClick={redirectToWomens} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Womens</Button>
+                    <Button onClick={redirectToElectronics} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Electronics</Button>
                     {username ? (<><Button size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">{username}</Button></>) : (<><Button onClick={redirectToLogin} size="sm" variant="text" className="h-[80%] rounded-full text-gray-500">Sign In</Button></>)}
                 </section>
             </motion.nav>

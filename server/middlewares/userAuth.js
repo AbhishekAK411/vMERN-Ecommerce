@@ -86,3 +86,19 @@ export const checkGetCartProduct = async(req,res,next) => {
         return res.status(500).json({status: 500, success: false, message: "Internal server error."});
     }
 }
+
+export const checkRemoveCart = async(req,res,next) => {
+    try {
+        const {userId, products} = req.body;
+        if(!userId) return res.status(404).json({status: 404, success: false, message: "You are not logged in."});
+
+        const findUser = await User.findById(userId).exec();
+        if(findUser.role === 'User'){
+            next();
+        }else{
+            return res.status(400).json({status: 400, success: false, message: "Contact an administrator."});
+        }
+    } catch (error) {
+        return res.status(500).json({status: 500, success: false, message: "Internal server error."});
+    }
+}

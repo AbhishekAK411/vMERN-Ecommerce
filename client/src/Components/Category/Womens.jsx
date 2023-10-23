@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import api from "../Helpers/apiConfig";
 import {useNavigate} from "react-router-dom";
 
-const Multiple = () => {
+const Womens = () => {
 
     const [defaultProduct, setDefaultProduct] = useState([]);
     const router = useNavigate();
@@ -31,7 +31,7 @@ const Multiple = () => {
             <main className="w-full min-h-screen mt-24 flex items-center justify-center">
                 <section className="w-[95%] min-h-screen my-5 flex flex-wrap gap-x-10 gap-y-12">
                     {defaultProduct?.length ? (<>
-                        {defaultProduct.map((product, i) => (
+                        {defaultProduct.filter(product => product.products_category === 'women').map((product, i) => (
                             <section key={i} className="w-[300px] h-[400px] border rounded-md">
                                 <Card className="h-full">
                                     <CardHeader color="blue-gray" className="h-56">
@@ -54,4 +54,4 @@ const Multiple = () => {
     )
 }
 
-export default Multiple;
+export default Womens;

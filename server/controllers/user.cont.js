@@ -2,6 +2,7 @@ import User from "../models/users.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import defProduct from "../models/defproduct.js";
+import Order from "../models/orders.js";
 
 //* Controller for registration
 export const register = async(req,res) => {
@@ -120,4 +121,32 @@ export const getCartProduct = async(req,res) => {
         return res.status(500).json({status: 500, success: false, message: "Internal server error."});
     }
 }
+
+export const removeCart = async (req, res) => {
+    try {
+        const { userId, products } = req.body;
+
+        const findUser = await User.findById(userId).exec();
+        if (findUser.role === "User") {
+            if (findUser.cartProducts.length > 0) {
+                const order = new Order({
+                    user: findUser._id,
+                    products: products.flat(),
+                });
+                console.log(order);
+                await order.save();
+                findUser.cartProducts = [];
+                await findUser.save();
+                return res.status(200).json({ status: 200, success: true, message: "You have ordered successfully." });
+            } else {
+                return res.status(400).json({ status: 400, success: false, message: "Your cart is empty." });
+            }
+        } else {
+            return res.status(400).json({ status: 400, success: false, message: "You are not a User." });
+        }
+    } catch (error) {
+        return res.status(500).json({ status: 500, success: false, message: "Internal server error." });
+    }
+};
+
 
