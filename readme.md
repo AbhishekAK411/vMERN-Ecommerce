@@ -34,7 +34,7 @@ Once users add products to their cart, they are able to checkout their products 
 
 ## Authors
 
-- [@vrishabhde](https://www.github.com/vrishabhde)
+- [@AbhishekAK411](https://www.github.com/abhishekak411)
 
 
 ## Environment Variables
