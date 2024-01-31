@@ -51,7 +51,7 @@ To run this project, you will need to add the following environment variables to
 
 `port` = 8000
 
-`jwtsecret` = "vrushabh"
+`jwtsecret` = "abhishek"
 
 
 ## Installation
